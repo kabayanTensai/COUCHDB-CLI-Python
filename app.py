@@ -3,8 +3,9 @@ import couchdb
 import json
 import os
 import urllib.request
+from config import COUCHDBURL,COUCHDB_DATABASE
 
-DB_NAME = "task_list_"
+DB_NAME = COUCHDB_DATABASE
 
 
 def internet(host='http://google.com'):
@@ -16,7 +17,7 @@ def internet(host='http://google.com'):
 
 
 def connect(db_name):
-    server = couchdb.Server('http://admin:iniadmin@13.250.43.79:5984/')
+    server = couchdb.Server(COUCHDBURL)
     db = server[db_name]
     return db
 
