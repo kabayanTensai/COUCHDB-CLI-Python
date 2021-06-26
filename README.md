@@ -14,9 +14,9 @@ This python apps support Synchronize local data & online data (Couchdb) but beca
 * example to  check available List Of task from user jhon  ``` ./task_list.sh jhon ```
 
 ## Available command for this app
-To List available task from user ``` list_task  --username=<username> --mode=<online/offline>```
-To Update/Create new Task ``` update_task  --username=<username --data=<dict>```
-To sync between online & local data ``` sync ```
+* To List available task from user ``` list_task  --username=<username> --mode=<online/offline>```
+* To Update/Create new Task ``` update_task  --username=<username --data=<dict>```
+* To sync between online & local data ``` sync ```
 
 # Development
 This app use following library
