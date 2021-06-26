@@ -1,6 +1,9 @@
 # TASK LIST CLI-PYTHON 
 This python app use CouchDB as its database and use Fire library to run the command line interface 
 
+# How To run via docker
+* run ``` docker pull danztensai123/task_list_couchdb ```
+* run ``` docker run task_list_couchdb list_task john ```
 # Installation
 
 * 1st install poetry on your system https://python-poetry.org/ 
