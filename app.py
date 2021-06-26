@@ -35,31 +35,34 @@ def sync(username):
 
 
 def list_task(username, mode="online"):
-    filename = f"./{DB_NAME}{username}.json"
-    if doesFileExists(filename) and mode == 'offline' or not internet():
-        print("Serving From Offline Data")
-        if not doesFileExists(filename):
-            print("No Offline Data & Internet")
-            return
-        with open(filename) as json_file:
-            data = json.load(json_file)
-            for p in data:
+    try:
+        filename = f"./{DB_NAME}{username}.json"
+        if doesFileExists(filename) and mode == 'offline' or not internet():
+            print("Serving From Offline Data")
+            if not doesFileExists(filename):
+                print("No Offline Data & Internet")
+                return
+            with open(filename) as json_file:
+                data = json.load(json_file)
+                for p in data:
+                    print("===================================")
+                    print(
+                        f"rev_id: {p['_rev']}\nId: {p['_id']} \nTask : {p['task']} \nTag : {p['tag']} \nStatus: {p['status']}\nCreated: {p['created']}")
+                    print("+++++++++++++++++++++++++++++++++++")
+        else:
+            db = connect(f"task_list_{username}")
+            print(f"Task List for {username}")
+            for doc in db:
                 print("===================================")
                 print(
-                    f"rev_id: {p['_rev']}\nId: {p['_id']} \nTask : {p['task']} \nTag : {p['tag']} \nStatus: {p['status']}\nCreated: {p['created']}")
+                    f"rev_id: {db[doc]['_rev']}\nId: {doc} \nTask : {db[doc]['task']} \nTag : {db[doc]['tag']} \nStatus: {db[doc]['status']}")
                 print("+++++++++++++++++++++++++++++++++++")
-    else:
-        db = connect(f"task_list_{username}")
-        print(f"Task List for {username}")
-        for doc in db:
-            print("===================================")
-            print(
-                f"rev_id: {db[doc]['_rev']}\nId: {doc} \nTask : {db[doc]['task']} \nTag : {db[doc]['tag']} \nStatus: {db[doc]['status']}")
-            print("+++++++++++++++++++++++++++++++++++")
-        # If there's no offline data will be sync for 1st time
-        if not doesFileExists(filename):
-            print(f"Synchronize {username} task list")
-            sync(username)
+            # If there's no offline data will be sync for 1st time
+            if not doesFileExists(filename):
+                print(f"Synchronize {username} task list")
+                sync(username)
+    except:
+        print("User Not Found")
 
 
 def update_task(username, data):
